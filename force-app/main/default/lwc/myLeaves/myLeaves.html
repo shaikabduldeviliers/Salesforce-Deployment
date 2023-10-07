@@ -1,0 +1,65 @@
+<template>
+    <lightning-card>
+      <lightning-button icon-name="utility:add" onclick={newLeaveRequest}></lightning-button>
+    <lightning-datatable
+      key-field="id"
+      data={data}
+      columns={columns}
+    onrowaction={rowHandler}
+    ></lightning-datatable>
+    <template lwc:if={showModal}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <lightning-button
+          icon-name="utility:connected_apps" 
+          alternative-text="Connected" 
+          size="xx-small" 
+          title="large size"
+          variant="inverse"
+          onclick={hideShowModal}
+          class="slds-align_absolute_right"
+        ></lightning-button>
+        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+        </svg>
+        <span class="slds-assistive-text">Cancel and close</span>
+        </button>
+        <div class="slds-modal__header">
+        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal header</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        
+          
+          <lightning-record-edit-form
+    object-api-name={objectApiName}
+    record-id={recordId}
+    onsuccess={successHandler}
+    
+    onsubmit={testDataHandler}
+    lwc:ref="leaveRequestForm"
+>
+    <lightning-input-field field-name="User__c" value={currentUserId}> </lightning-input-field>
+    <lightning-input-field field-name="Reason__c"> </lightning-input-field>
+    <lightning-input-field field-name="From_Date__c"> </lightning-input-field>
+    <lightning-input-field field-name="To_Date__c"> </lightning-input-field>
+    
+    <div class="slds-var-m-top_medium">
+        <lightning-button variant="brand" type="submit" label="Save">
+        </lightning-button>
+        <lightning-button label="Cancel" onclick={hideShowModal}></lightning-button>
+    </div>
+</lightning-record-edit-form>
+        </div>
+        
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <template lwc:if={noRecords}>
+
+        <div class="slds-p-around_medium slds-align_absolute-center">
+            No Leaves Found
+</div>
+</template>
+</lightning-card>
+</template>
